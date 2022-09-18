@@ -2,7 +2,6 @@ html, body {
   background-color: #222;
   box-sizing: border-box;
   font-family: "Courier New", Courier, monospace;
-  color: rgba(255, 255, 255, 0.25);
 }
 *, *:before, *:after {
   box-sizing: inherit;
@@ -12,23 +11,9 @@ html, body {
 .wrapper {
   position: relative;
 }
-.header {
-  position: absolute;
-  top: 10px;
-  left: 0;
-  right: 0;
-  margin-inline: auto;
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  width: 480px;
-  margin: 0 auto;
-  font-weight: 900;
-  font-size: 20px;
-}
+.header,
 .footer {
   position: absolute;
-  bottom: 10px;
   left: 0;
   right: 0;
   margin-inline: auto;
@@ -37,8 +22,19 @@ html, body {
   justify-content: space-between;
   width: 480px;
   margin: 0 auto;
-  cursor: pointer;
   font-size: 20px;
+  color: rgba(255, 255, 255, 0.25);
+}
+.header {
+  top: 10px;
+  font-weight: 900;
+}
+.footer {
+  bottom: 10px;
+  cursor: pointer;
+}
+.footer > *:hover {
+  color: rgba(255, 255, 255, 0.5);
 }
 .canvas {
   display: block;
