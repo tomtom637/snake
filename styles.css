@@ -1,0 +1,46 @@
+html, body {
+  background-color: #222;
+  box-sizing: border-box;
+  font-family: "Courier New", Courier, monospace;
+  color: rgba(255, 255, 255, 0.15);
+  font-weight: 900;
+  font-size: 20px;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+  margin: 0;
+  padding: 0;
+}
+.wrapper {
+  position: relative;
+}
+.header {
+  position: absolute;
+  top: 10px;
+  left: 0;
+  right: 0;
+  margin-inline: auto;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  width: 480px;
+  margin: 0 auto;
+}
+.footer {
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  right: 0;
+  margin-inline: auto;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  width: 480px;
+  margin: 0 auto;
+  cursor: pointer;
+}
+.canvas {
+  display: block;
+  margin: 20px auto;
+  background-color: #111;
+}
