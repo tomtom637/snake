@@ -12,7 +12,6 @@ canvas.height = 500;
 app.append(canvas);
 
 // GAME LOGIC
-
 class Snake {
   constructor() {
     this.desiredDirection = "right";
