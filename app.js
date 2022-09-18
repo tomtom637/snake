@@ -13,8 +13,8 @@ app.append(canvas);
 
 // GAME LOGIC
 class Snake {
-  constructor() {
-    this.desiredDirection = "right";
+  constructor () {
+    this.bufferedInputs = [];
     this.direction = "right";
     this.scale = 10;
     this.body = [[25, 25], [24, 25], [23, 25]];
@@ -39,25 +39,25 @@ class Snake {
     switch (this.direction) {
       case "right":
         this.body.unshift([head[0] + 1, head[1]]);
-        if(this.body[0][0] === 50) {
+        if (this.body[0][0] === 50) {
           this.body[0][0] = 0;
         }
         break;
       case "left":
         this.body.unshift([head[0] - 1, head[1]]);
-        if(this.body[0][0] === -1) {
+        if (this.body[0][0] === -1) {
           this.body[0][0] = 49;
         }
         break;
       case "up":
         this.body.unshift([head[0], head[1] - 1]);
-        if(this.body[0][1] === -1) {
+        if (this.body[0][1] === -1) {
           this.body[0][1] = 49;
         }
         break;
       case "down":
         this.body.unshift([head[0], head[1] + 1]);
-        if(this.body[0][1] === 50) {
+        if (this.body[0][1] === 50) {
           this.body[0][1] = 0;
         }
         break;
@@ -120,7 +120,8 @@ function gameLoop() {
     snake.drawFood();
     snake.eat();
     snake.checkCollision();
-    snake.direction = snake.desiredDirection;
+    snake.direction = snake.bufferedInputs[0] || snake.direction;
+    snake.bufferedInputs.shift();
   }
   requestAnimationFrame(gameLoop);
 }
@@ -129,26 +130,60 @@ gameLoop();
 
 // KEYBOARD EVENTS
 document.addEventListener("keydown", (e) => {
+  if (snake.bufferedInputs.length > 2) return;
   switch (e.key) {
     case "ArrowUp":
-      if (snake.direction !== "down") {
-        snake.desiredDirection = "up";
+      if (snake.bufferedInputs.length !== 0) {
+        if (snake.bufferedInputs[snake.bufferedInputs.length - 1] === "down" ||
+          snake.bufferedInputs[snake.bufferedInputs.length - 1] === "up") {
+          return;
+        };
+        snake.bufferedInputs.push("up");
+      } else {
+        if (snake.direction !== "down" && snake.direction !== "up") {
+          snake.bufferedInputs.push("up");
+        }
       }
       break;
     case "ArrowDown":
-      if (snake.direction !== "up") {
-        snake.desiredDirection = "down";
+      if (snake.bufferedInputs.length !== 0) {
+        if (snake.bufferedInputs[snake.bufferedInputs.length - 1] === "up" ||
+          snake.bufferedInputs[snake.bufferedInputs.length - 1] === "down") {
+          return;
+        };
+        snake.bufferedInputs.push("down");
+      } else {
+        if (snake.direction !== "up" && snake.direction !== "down") {
+          snake.bufferedInputs.push("down");
+        }
       }
       break;
     case "ArrowLeft":
-      if (snake.direction !== "right") {
-        snake.desiredDirection = "left";
+      if (snake.bufferedInputs.length !== 0) {
+        if (snake.bufferedInputs[snake.bufferedInputs.length - 1] === "right" ||
+          snake.bufferedInputs[snake.bufferedInputs.length - 1] === "left") {
+          return;
+        };
+        snake.bufferedInputs.push("left");
+      } else {
+        if (snake.direction !== "right" && snake.direction !== "left") {
+          snake.bufferedInputs.push("left");
+        }
       }
       break;
     case "ArrowRight":
-      if (snake.direction !== "left") {
-        snake.desiredDirection = "right";
+      if (snake.bufferedInputs.length !== 0) {
+        if (snake.bufferedInputs[snake.bufferedInputs.length - 1] === "left" ||
+          snake.bufferedInputs[snake.bufferedInputs.length - 1] === "right") {
+          return;
+        };
+        snake.bufferedInputs.push("right");
+      } else {
+        if (snake.direction !== "left" && snake.direction !== "right") {
+          snake.bufferedInputs.push("right");
+        }
       }
+      break;
   }
 });
 
