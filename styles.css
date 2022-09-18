@@ -2,9 +2,7 @@ html, body {
   background-color: #222;
   box-sizing: border-box;
   font-family: "Courier New", Courier, monospace;
-  color: rgba(255, 255, 255, 0.15);
-  font-weight: 900;
-  font-size: 20px;
+  color: rgba(255, 255, 255, 0.25);
 }
 *, *:before, *:after {
   box-sizing: inherit;
@@ -25,6 +23,8 @@ html, body {
   justify-content: space-between;
   width: 480px;
   margin: 0 auto;
+  font-weight: 900;
+  font-size: 20px;
 }
 .footer {
   position: absolute;
@@ -38,6 +38,7 @@ html, body {
   width: 480px;
   margin: 0 auto;
   cursor: pointer;
+  font-size: 20px;
 }
 .canvas {
   display: block;
