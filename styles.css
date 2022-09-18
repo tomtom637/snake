@@ -31,6 +31,8 @@ html, body {
 }
 .footer {
   bottom: 10px;
+}
+.footer > * {
   cursor: pointer;
 }
 .footer > *:hover {
