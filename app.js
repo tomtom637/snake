@@ -7,8 +7,8 @@ scoreElement.textContent = 0;
 const canvas = document.createElement("canvas");
 canvas.classList.add("canvas");
 const ctx = canvas.getContext("2d");
-canvas.width = 500;
-canvas.height = 500;
+canvas.width = 400;
+canvas.height = 400;
 app.append(canvas);
 
 // GAME LOGIC
@@ -17,9 +17,11 @@ class Snake {
     this.bufferedInputs = [];
     this.direction = "right";
     this.scale = 10;
-    this.body = [[25, 25], [24, 25], [23, 25]];
-    this.foodPosition = [~~(Math.random() * 50) * this.scale, ~~(Math.random() * 50) * this.scale];
-    this.foodIsEaten = false;
+    this.body = [
+      [canvas.width / (2 * this.scale), canvas.width / (2 * this.scale)],
+      [canvas.width / (2 * this.scale) - this.scale, canvas.width / (2 * this.scale)],
+      [canvas.width / (2 * this.scale) - this.scale - this.scale, canvas.width / (2 * this.scale)]];
+    this.foodPosition = [~~(Math.random() * canvas.width / this.scale) * this.scale, ~~(Math.random() * canvas.height / this.scale) * this.scale];
     this.score = 0;
     this.init();
   }
@@ -27,7 +29,6 @@ class Snake {
     this.drawSnake();
   }
   drawSnake() {
-    if (this.foodIsEaten) return;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = "green";
     this.body.forEach((el) => {
@@ -39,25 +40,25 @@ class Snake {
     switch (this.direction) {
       case "right":
         this.body.unshift([head[0] + 1, head[1]]);
-        if (this.body[0][0] === 50) {
+        if (this.body[0][0] === canvas.width / this.scale) {
           this.body[0][0] = 0;
         }
         break;
       case "left":
         this.body.unshift([head[0] - 1, head[1]]);
         if (this.body[0][0] === -1) {
-          this.body[0][0] = 49;
+          this.body[0][0] = (canvas.width / this.scale) - 1;
         }
         break;
       case "up":
         this.body.unshift([head[0], head[1] - 1]);
         if (this.body[0][1] === -1) {
-          this.body[0][1] = 49;
+          this.body[0][1] = (canvas.height / this.scale) - 1;
         }
         break;
       case "down":
         this.body.unshift([head[0], head[1] + 1]);
-        if (this.body[0][1] === 50) {
+        if (this.body[0][1] === canvas.height / this.scale) {
           this.body[0][1] = 0;
         }
         break;
@@ -69,7 +70,7 @@ class Snake {
     ctx.fillRect(this.foodPosition[0], this.foodPosition[1], this.scale, this.scale);
   }
   updateFoodPosition() {
-    this.foodPosition = [~~(Math.random() * 50) * this.scale, ~~(Math.random() * 50) * this.scale];
+    this.foodPosition = [~~(Math.random() * canvas.width / this.scale) * this.scale, ~~(Math.random() * canvas.height / this.scale) * this.scale];
   }
   eat() {
     if (this.body[0][0] === this.foodPosition[0] / this.scale && this.body[0][1] === this.foodPosition[1] / this.scale) {
@@ -102,19 +103,21 @@ const snake = new Snake();
 
 const speeds = {
   slow: 7,
-  medium: 5,
-  fast: 2,
-  madness: 1,
+  normal: 5,
+  fast: 3,
+  insane: 2,
 };
 
-let currentSpeed = speeds.medium;
-
-let counter = 0;
-
 // GAME LOOP
-function gameLoop() {
+let currentSpeed = speeds.normal;
+let counter = 0;
+let previousTimestamp = 0;
+
+function gameLoop(timestamp) {
   counter++;
-  if (counter % currentSpeed === 0) {
+  const elapsed = timestamp - previousTimestamp;
+  previousTimestamp = timestamp;
+  if (counter % ~~(16 * currentSpeed / elapsed) === 0) {
     snake.updateSnake();
     snake.drawSnake();
     snake.drawFood();

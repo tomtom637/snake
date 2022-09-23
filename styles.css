@@ -10,6 +10,8 @@ html, body {
 }
 .wrapper {
   position: relative;
+  width: fit-content;
+  margin: 0 auto;
 }
 .header,
 .footer {
@@ -20,7 +22,7 @@ html, body {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  width: 480px;
+  width: calc(100% - 15px);
   margin: 0 auto;
   font-size: 20px;
   color: rgba(255, 255, 255, 0.25);
