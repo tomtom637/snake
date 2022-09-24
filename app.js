@@ -7,8 +7,10 @@ scoreElement.textContent = 0;
 const canvas = document.createElement("canvas");
 canvas.classList.add("canvas");
 const ctx = canvas.getContext("2d");
-canvas.width = 400;
-canvas.height = 400;
+canvas.width = 800;
+canvas.height = 800;
+canvas.style.width = canvas.width / 2 + "px";
+canvas.style.height = canvas.height / 2 + "px";
 app.append(canvas);
 
 // GAME LOGIC
@@ -16,13 +18,14 @@ class Snake {
   constructor () {
     this.bufferedInputs = [];
     this.direction = "right";
-    this.scale = 10;
+    this.scale = 40;
     this.body = [
       [canvas.width / (2 * this.scale), canvas.width / (2 * this.scale)],
       [canvas.width / (2 * this.scale) - this.scale, canvas.width / (2 * this.scale)],
       [canvas.width / (2 * this.scale) - this.scale - this.scale, canvas.width / (2 * this.scale)]];
-    this.foodPosition = [~~(Math.random() * canvas.width / this.scale) * this.scale, ~~(Math.random() * canvas.height / this.scale) * this.scale];
     this.score = 0;
+    this.updateFoodPosition();
+    this.style = "retro";
     this.init();
   }
   init() {
@@ -30,10 +33,18 @@ class Snake {
   }
   drawSnake() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = "green";
-    this.body.forEach((el) => {
-      ctx.fillRect(el[0] * this.scale, el[1] * this.scale, this.scale, this.scale);
-    });
+    switch (this.style) {
+      case "retro":
+        ctx.fillStyle = "green";
+        this.body.forEach((el) => {
+          ctx.fillRect(el[0] * this.scale, el[1] * this.scale, this.scale, this.scale);
+        });
+        ctx.strokeStyle = "aquamarine";
+        this.body.forEach((el) => {
+          ctx.strokeRect(el[0] * this.scale, el[1] * this.scale, this.scale, this.scale);
+        });
+        break;
+    }
   }
   updateSnake() {
     const head = this.body[0];
@@ -66,11 +77,18 @@ class Snake {
     this.body.pop();
   }
   drawFood() {
-    ctx.fillStyle = "red";
-    ctx.fillRect(this.foodPosition[0], this.foodPosition[1], this.scale, this.scale);
+    switch (this.style) {
+      case "retro":
+        ctx.fillStyle = "red";
+        ctx.fillRect(this.foodPosition[0] + this.scale / 4, this.foodPosition[1] + this.scale / 4, this.scale - (this.scale / 2), this.scale - (this.scale / 2));
+        break;
+    }
   }
   updateFoodPosition() {
     this.foodPosition = [~~(Math.random() * canvas.width / this.scale) * this.scale, ~~(Math.random() * canvas.height / this.scale) * this.scale];
+    if (this.body.some((el) => el[0] * this.scale === this.foodPosition[0] && el[1] * this.scale === this.foodPosition[1])) {
+      this.updateFoodPosition();
+    }
   }
   eat() {
     if (this.body[0][0] === this.foodPosition[0] / this.scale && this.body[0][1] === this.foodPosition[1] / this.scale) {
@@ -102,9 +120,9 @@ class Snake {
 const snake = new Snake();
 
 const speeds = {
-  slow: 7,
-  normal: 5,
-  fast: 3,
+  slow: 10,
+  normal: 7,
+  fast: 5,
   insane: 2,
 };
 
