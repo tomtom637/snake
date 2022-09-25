@@ -20,12 +20,13 @@ class Snake {
     this.direction = "right";
     this.scale = 40;
     this.body = [
-      [canvas.width / (2 * this.scale), canvas.width / (2 * this.scale)],
-      [canvas.width / (2 * this.scale) - this.scale, canvas.width / (2 * this.scale)],
-      [canvas.width / (2 * this.scale) - this.scale - this.scale, canvas.width / (2 * this.scale)]];
+      [canvas.width / (2 * this.scale), canvas.width / (2 * this.scale), "right"],
+      [canvas.width / (2 * this.scale) - this.scale, canvas.width / (2 * this.scale), "right"],
+      [canvas.width / (2 * this.scale) - this.scale - this.scale, canvas.width / (2 * this.scale), "right"]
+    ];
     this.score = 0;
     this.updateFoodPosition();
-    this.style = "retro";
+    this.style = "thin";
     this.init();
   }
   init() {
@@ -44,31 +45,316 @@ class Snake {
           ctx.strokeRect(el[0] * this.scale, el[1] * this.scale, this.scale, this.scale);
         });
         break;
+      case "thin":
+        const unit = this.scale / 4;
+        ctx.fillStyle = "green";
+        this.body.forEach((el, i) => {
+          if (el[2] === "right") {
+            if (i === 0) {
+              ctx.fillRect(
+                el[0] * this.scale,
+                el[1] * this.scale + unit,
+                this.scale,
+                this.scale - (unit * 2)
+              );
+            }
+            if (i !== 0 && this.body[i - 1][2] === "up") {
+              ctx.fillRect(
+                el[0] * this.scale,
+                el[1] * this.scale + unit,
+                unit,
+                unit * 2
+              );
+              ctx.fillRect(
+                el[0] * this.scale + unit,
+                el[1] * this.scale + unit,
+                unit * 2,
+                unit * 2
+              );
+              ctx.fillRect(
+                el[0] * this.scale + unit,
+                el[1] * this.scale,
+                unit * 2,
+                unit
+              );
+            }
+            if (i !== 0 && this.body[i - 1][2] === "down") {
+              ctx.fillRect(
+                el[0] * this.scale,
+                el[1] * this.scale + unit,
+                unit,
+                unit * 2
+              );
+              ctx.fillRect(
+                el[0] * this.scale + unit,
+                el[1] * this.scale + unit,
+                unit * 2,
+                unit * 2
+              );
+              ctx.fillRect(
+                el[0] * this.scale + unit,
+                el[1] * this.scale + unit * 3,
+                unit * 2,
+                unit
+              );
+            }
+            if (i !== 0 && this.body[i - 1][2] === "right") {
+              ctx.fillRect(
+                el[0] * this.scale,
+                el[1] * this.scale + unit,
+                unit,
+                unit * 2
+              );
+              ctx.fillRect(
+                el[0] * this.scale + unit,
+                el[1] * this.scale + unit,
+                unit * 2,
+                unit * 2
+              );
+              ctx.fillRect(
+                el[0] * this.scale + unit * 3,
+                el[1] * this.scale + unit,
+                unit,
+                unit * 2
+              );
+            }
+          }
+          if (el[2] === "left") {
+            if (i === 0) {
+              ctx.fillRect(
+                el[0] * this.scale,
+                el[1] * this.scale + unit,
+                this.scale,
+                this.scale - (unit * 2)
+              );
+            }
+            if (i !== 0 && this.body[i - 1][2] === "up") {
+              ctx.fillRect(
+                el[0] * this.scale + unit * 3,
+                el[1] * this.scale + unit,
+                unit,
+                unit * 2
+              );
+              ctx.fillRect(
+                el[0] * this.scale + unit,
+                el[1] * this.scale + unit,
+                unit * 2,
+                unit * 2
+              );
+              ctx.fillRect(
+                el[0] * this.scale + unit,
+                el[1] * this.scale,
+                unit * 2,
+                unit
+              );
+            }
+            if (i !== 0 && this.body[i - 1][2] === "down") {
+              ctx.fillRect(
+                el[0] * this.scale + unit * 3,
+                el[1] * this.scale + unit,
+                unit,
+                unit * 2
+              );
+              ctx.fillRect(
+                el[0] * this.scale + unit,
+                el[1] * this.scale + unit,
+                unit * 2,
+                unit * 2
+              );
+              ctx.fillRect(
+                el[0] * this.scale + unit,
+                el[1] * this.scale + unit * 3,
+                unit * 2,
+                unit
+              );
+            }
+            if (i !== 0 && this.body[i - 1][2] === "left") {
+              ctx.fillRect(
+                el[0] * this.scale + unit * 3,
+                el[1] * this.scale + unit,
+                unit,
+                unit * 2
+              );
+              ctx.fillRect(
+                el[0] * this.scale + unit,
+                el[1] * this.scale + unit,
+                unit * 2,
+                unit * 2
+              );
+              ctx.fillRect(
+                el[0] * this.scale,
+                el[1] * this.scale + unit,
+                unit,
+                unit * 2
+              );
+            }
+          }
+          if (el[2] === "up") {
+            if (i === 0) {
+              ctx.fillRect(
+                el[0] * this.scale + unit,
+                el[1] * this.scale,
+                this.scale - (unit * 2),
+                this.scale
+              );
+            }
+            if (i !== 0 && this.body[i - 1][2] === "right") {
+              ctx.fillRect(
+                el[0] * this.scale + unit,
+                el[1] * this.scale + unit * 3,
+                unit * 2,
+                unit
+              );
+              ctx.fillRect(
+                el[0] * this.scale + unit,
+                el[1] * this.scale + unit,
+                unit * 2,
+                unit * 2
+              );
+              ctx.fillRect(
+                el[0] * this.scale + unit * 3,
+                el[1] * this.scale + unit,
+                unit,
+                unit * 2
+              );
+            }
+            if (i !== 0 && this.body[i - 1][2] === "left") {
+              ctx.fillRect(
+                el[0] * this.scale + unit,
+                el[1] * this.scale + unit * 3,
+                unit * 2,
+                unit
+              );
+              ctx.fillRect(
+                el[0] * this.scale + unit,
+                el[1] * this.scale + unit,
+                unit * 2,
+                unit * 2
+              );
+              ctx.fillRect(
+                el[0] * this.scale,
+                el[1] * this.scale + unit,
+                unit,
+                unit * 2
+              );
+            }
+            if (i !== 0 && this.body[i - 1][2] === "up") {
+              ctx.fillRect(
+                el[0] * this.scale + unit,
+                el[1] * this.scale + unit * 3,
+                unit * 2,
+                unit
+              );
+              ctx.fillRect(
+                el[0] * this.scale + unit,
+                el[1] * this.scale + unit,
+                unit * 2,
+                unit * 2
+              );
+              ctx.fillRect(
+                el[0] * this.scale + unit,
+                el[1] * this.scale,
+                unit * 2,
+                unit
+              );
+            }
+          }
+          if (el[2] === "down") {
+            if (i === 0) {
+              ctx.fillRect(
+                el[0] * this.scale + unit,
+                el[1] * this.scale,
+                this.scale - (unit * 2),
+                this.scale
+              );
+            }
+            if (i !== 0 && this.body[i - 1][2] === "right") {
+              ctx.fillRect(
+                el[0] * this.scale + unit,
+                el[1] * this.scale,
+                unit * 2,
+                unit
+              );
+              ctx.fillRect(
+                el[0] * this.scale + unit,
+                el[1] * this.scale + unit,
+                unit * 2,
+                unit * 2
+              );
+              ctx.fillRect(
+                el[0] * this.scale + unit * 3,
+                el[1] * this.scale + unit,
+                unit,
+                unit * 2
+              );
+            }
+            if (i !== 0 && this.body[i - 1][2] === "left") {
+              ctx.fillRect(
+                el[0] * this.scale + unit,
+                el[1] * this.scale,
+                unit * 2,
+                unit
+              );
+              ctx.fillRect(
+                el[0] * this.scale + unit,
+                el[1] * this.scale + unit,
+                unit * 2,
+                unit * 2
+              );
+              ctx.fillRect(
+                el[0] * this.scale,
+                el[1] * this.scale + unit,
+                unit,
+                unit * 2
+              );
+            }
+            if (i !== 0 && this.body[i - 1][2] === "down") {
+              ctx.fillRect(
+                el[0] * this.scale + unit,
+                el[1] * this.scale,
+                unit * 2,
+                unit
+              );
+              ctx.fillRect(
+                el[0] * this.scale + unit,
+                el[1] * this.scale + unit,
+                unit * 2,
+                unit * 2
+              );
+              ctx.fillRect(
+                el[0] * this.scale + unit,
+                el[1] * this.scale + unit * 3,
+                unit * 2,
+                unit
+              );
+            }
+          }
+        });
     }
   }
   updateSnake() {
     const head = this.body[0];
     switch (this.direction) {
       case "right":
-        this.body.unshift([head[0] + 1, head[1]]);
+        this.body.unshift([head[0] + 1, head[1], "right"]);
         if (this.body[0][0] === canvas.width / this.scale) {
           this.body[0][0] = 0;
         }
         break;
       case "left":
-        this.body.unshift([head[0] - 1, head[1]]);
+        this.body.unshift([head[0] - 1, head[1], "left"]);
         if (this.body[0][0] === -1) {
           this.body[0][0] = (canvas.width / this.scale) - 1;
         }
         break;
       case "up":
-        this.body.unshift([head[0], head[1] - 1]);
+        this.body.unshift([head[0], head[1] - 1, "up"]);
         if (this.body[0][1] === -1) {
           this.body[0][1] = (canvas.height / this.scale) - 1;
         }
         break;
       case "down":
-        this.body.unshift([head[0], head[1] + 1]);
+        this.body.unshift([head[0], head[1] + 1, "down"]);
         if (this.body[0][1] === canvas.height / this.scale) {
           this.body[0][1] = 0;
         }
@@ -82,6 +368,9 @@ class Snake {
         ctx.fillStyle = "red";
         ctx.fillRect(this.foodPosition[0] + this.scale / 4, this.foodPosition[1] + this.scale / 4, this.scale - (this.scale / 2), this.scale - (this.scale / 2));
         break;
+      case "thin":
+        ctx.fillStyle = "red";
+        ctx.fillRect(this.foodPosition[0] + this.scale / 4, this.foodPosition[1] + this.scale / 4, this.scale - (this.scale / 2), this.scale - (this.scale / 2));
     }
   }
   updateFoodPosition() {
