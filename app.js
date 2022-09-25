@@ -48,285 +48,108 @@ class Snake {
       case "thin":
         const unit = this.scale / 4;
         ctx.fillStyle = "green";
+        ctx.strokeStyle = "aquamarine";
         this.body.forEach((el, i) => {
-          if (el[2] === "right") {
-            if (i === 0) {
-              ctx.fillRect(
-                el[0] * this.scale,
-                el[1] * this.scale + unit,
-                this.scale,
-                this.scale - (unit * 2)
-              );
-            }
-            if (i !== 0 && this.body[i - 1][2] === "up") {
-              ctx.fillRect(
-                el[0] * this.scale,
-                el[1] * this.scale + unit,
-                unit,
-                unit * 2
-              );
-              ctx.fillRect(
-                el[0] * this.scale + unit,
-                el[1] * this.scale + unit,
-                unit * 2,
-                unit * 2
-              );
-              ctx.fillRect(
-                el[0] * this.scale + unit,
-                el[1] * this.scale,
-                unit * 2,
-                unit
-              );
-            }
-            if (i !== 0 && this.body[i - 1][2] === "down") {
-              ctx.fillRect(
-                el[0] * this.scale,
-                el[1] * this.scale + unit,
-                unit,
-                unit * 2
-              );
-              ctx.fillRect(
-                el[0] * this.scale + unit,
-                el[1] * this.scale + unit,
-                unit * 2,
-                unit * 2
-              );
-              ctx.fillRect(
-                el[0] * this.scale + unit,
-                el[1] * this.scale + unit * 3,
-                unit * 2,
-                unit
-              );
-            }
-            if (i !== 0 && this.body[i - 1][2] === "right") {
-              ctx.fillRect(
-                el[0] * this.scale,
-                el[1] * this.scale + unit,
-                unit,
-                unit * 2
-              );
-              ctx.fillRect(
-                el[0] * this.scale + unit,
-                el[1] * this.scale + unit,
-                unit * 2,
-                unit * 2
-              );
-              ctx.fillRect(
-                el[0] * this.scale + unit * 3,
-                el[1] * this.scale + unit,
-                unit,
-                unit * 2
-              );
-            }
+          if (i === 0) {
+            ctx.fillRect(el[0] * this.scale + unit / 2, el[1] * this.scale + unit / 2, this.scale - unit, this.scale - unit);
+            ctx.strokeRect(el[0] * this.scale + unit / 2, el[1] * this.scale + unit / 2, this.scale - unit, this.scale - unit);
           }
-          if (el[2] === "left") {
-            if (i === 0) {
-              ctx.fillRect(
-                el[0] * this.scale,
-                el[1] * this.scale + unit,
-                this.scale,
-                this.scale - (unit * 2)
-              );
+          if (i !== 0) {
+            if (el[2] === "right" && this.body[i - 1][2] === "up") {
+              ctx.fillRect(el[0] * this.scale, el[1] * this.scale + unit, unit, unit * 2);
+              ctx.fillRect(el[0] * this.scale + unit, el[1] * this.scale + unit, unit * 2, unit * 2);
+              ctx.fillRect(el[0] * this.scale + unit, el[1] * this.scale, unit * 2, unit);
+              ctx.strokeRect(el[0] * this.scale, el[1] * this.scale + unit, unit, unit * 2);
+              ctx.strokeRect(el[0] * this.scale + unit, el[1] * this.scale + unit, unit * 2, unit * 2);
+              ctx.strokeRect(el[0] * this.scale + unit, el[1] * this.scale, unit * 2, unit);
             }
-            if (i !== 0 && this.body[i - 1][2] === "up") {
-              ctx.fillRect(
-                el[0] * this.scale + unit * 3,
-                el[1] * this.scale + unit,
-                unit,
-                unit * 2
-              );
-              ctx.fillRect(
-                el[0] * this.scale + unit,
-                el[1] * this.scale + unit,
-                unit * 2,
-                unit * 2
-              );
-              ctx.fillRect(
-                el[0] * this.scale + unit,
-                el[1] * this.scale,
-                unit * 2,
-                unit
-              );
+            if (el[2] === "right" && this.body[i - 1][2] === "down") {
+              ctx.fillRect(el[0] * this.scale, el[1] * this.scale + unit, unit, unit * 2);
+              ctx.fillRect(el[0] * this.scale + unit, el[1] * this.scale + unit, unit * 2, unit * 2);
+              ctx.fillRect(el[0] * this.scale + unit, el[1] * this.scale + unit * 3, unit * 2, unit);
+              ctx.strokeRect(el[0] * this.scale, el[1] * this.scale + unit, unit, unit * 2);
+              ctx.strokeRect(el[0] * this.scale + unit, el[1] * this.scale + unit, unit * 2, unit * 2);
+              ctx.strokeRect(el[0] * this.scale + unit, el[1] * this.scale + unit * 3, unit * 2, unit);
             }
-            if (i !== 0 && this.body[i - 1][2] === "down") {
-              ctx.fillRect(
-                el[0] * this.scale + unit * 3,
-                el[1] * this.scale + unit,
-                unit,
-                unit * 2
-              );
-              ctx.fillRect(
-                el[0] * this.scale + unit,
-                el[1] * this.scale + unit,
-                unit * 2,
-                unit * 2
-              );
-              ctx.fillRect(
-                el[0] * this.scale + unit,
-                el[1] * this.scale + unit * 3,
-                unit * 2,
-                unit
-              );
+            if (el[2] === "right" && this.body[i - 1][2] === "right") {
+              ctx.fillRect(el[0] * this.scale, el[1] * this.scale + unit, unit, unit * 2);
+              ctx.fillRect(el[0] * this.scale + unit, el[1] * this.scale + unit, unit * 2, unit * 2);
+              ctx.fillRect(el[0] * this.scale + unit * 3, el[1] * this.scale + unit, unit, unit * 2);
+              ctx.strokeRect(el[0] * this.scale, el[1] * this.scale + unit, unit, unit * 2);
+              ctx.strokeRect(el[0] * this.scale + unit, el[1] * this.scale + unit, unit * 2, unit * 2);
+              ctx.strokeRect(el[0] * this.scale + unit * 3, el[1] * this.scale + unit, unit, unit * 2);
             }
-            if (i !== 0 && this.body[i - 1][2] === "left") {
-              ctx.fillRect(
-                el[0] * this.scale + unit * 3,
-                el[1] * this.scale + unit,
-                unit,
-                unit * 2
-              );
-              ctx.fillRect(
-                el[0] * this.scale + unit,
-                el[1] * this.scale + unit,
-                unit * 2,
-                unit * 2
-              );
-              ctx.fillRect(
-                el[0] * this.scale,
-                el[1] * this.scale + unit,
-                unit,
-                unit * 2
-              );
+            if (el[2] === "left" && this.body[i - 1][2] === "up") {
+              ctx.fillRect(el[0] * this.scale + unit * 3, el[1] * this.scale + unit, unit, unit * 2);
+              ctx.fillRect(el[0] * this.scale + unit, el[1] * this.scale + unit, unit * 2, unit * 2);
+              ctx.fillRect(el[0] * this.scale + unit, el[1] * this.scale, unit * 2, unit);
+              ctx.strokeRect(el[0] * this.scale + unit * 3, el[1] * this.scale + unit, unit, unit * 2);
+              ctx.strokeRect(el[0] * this.scale + unit, el[1] * this.scale + unit, unit * 2, unit * 2);
+              ctx.strokeRect(el[0] * this.scale + unit, el[1] * this.scale, unit * 2, unit);
             }
-          }
-          if (el[2] === "up") {
-            if (i === 0) {
-              ctx.fillRect(
-                el[0] * this.scale + unit,
-                el[1] * this.scale,
-                this.scale - (unit * 2),
-                this.scale
-              );
+            if (el[2] === "left" && this.body[i - 1][2] === "down") {
+              ctx.fillRect(el[0] * this.scale + unit * 3, el[1] * this.scale + unit, unit, unit * 2);
+              ctx.fillRect(el[0] * this.scale + unit, el[1] * this.scale + unit, unit * 2, unit * 2);
+              ctx.fillRect(el[0] * this.scale + unit, el[1] * this.scale + unit * 3, unit * 2, unit);
+              ctx.strokeRect(el[0] * this.scale + unit * 3, el[1] * this.scale + unit, unit, unit * 2);
+              ctx.strokeRect(el[0] * this.scale + unit, el[1] * this.scale + unit, unit * 2, unit * 2);
+              ctx.strokeRect(el[0] * this.scale + unit, el[1] * this.scale + unit * 3, unit * 2, unit);
             }
-            if (i !== 0 && this.body[i - 1][2] === "right") {
-              ctx.fillRect(
-                el[0] * this.scale + unit,
-                el[1] * this.scale + unit * 3,
-                unit * 2,
-                unit
-              );
-              ctx.fillRect(
-                el[0] * this.scale + unit,
-                el[1] * this.scale + unit,
-                unit * 2,
-                unit * 2
-              );
-              ctx.fillRect(
-                el[0] * this.scale + unit * 3,
-                el[1] * this.scale + unit,
-                unit,
-                unit * 2
-              );
+            if (el[2] === "left" && this.body[i - 1][2] === "left") {
+              ctx.fillRect(el[0] * this.scale + unit * 3, el[1] * this.scale + unit, unit, unit * 2);
+              ctx.fillRect(el[0] * this.scale + unit, el[1] * this.scale + unit, unit * 2, unit * 2);
+              ctx.fillRect(el[0] * this.scale, el[1] * this.scale + unit, unit, unit * 2);
+              ctx.strokeRect(el[0] * this.scale + unit * 3, el[1] * this.scale + unit, unit, unit * 2);
+              ctx.strokeRect(el[0] * this.scale + unit, el[1] * this.scale + unit, unit * 2, unit * 2);
+              ctx.strokeRect(el[0] * this.scale, el[1] * this.scale + unit, unit, unit * 2);
             }
-            if (i !== 0 && this.body[i - 1][2] === "left") {
-              ctx.fillRect(
-                el[0] * this.scale + unit,
-                el[1] * this.scale + unit * 3,
-                unit * 2,
-                unit
-              );
-              ctx.fillRect(
-                el[0] * this.scale + unit,
-                el[1] * this.scale + unit,
-                unit * 2,
-                unit * 2
-              );
-              ctx.fillRect(
-                el[0] * this.scale,
-                el[1] * this.scale + unit,
-                unit,
-                unit * 2
-              );
+            if (el[2] === "up" && this.body[i - 1][2] === "right") {
+              ctx.fillRect(el[0] * this.scale + unit, el[1] * this.scale + unit * 3, unit * 2, unit);
+              ctx.fillRect(el[0] * this.scale + unit, el[1] * this.scale + unit, unit * 2, unit * 2);
+              ctx.fillRect(el[0] * this.scale + unit * 3, el[1] * this.scale + unit, unit, unit * 2);
+              ctx.strokeRect(el[0] * this.scale + unit, el[1] * this.scale + unit * 3, unit * 2, unit);
+              ctx.strokeRect(el[0] * this.scale + unit, el[1] * this.scale + unit, unit * 2, unit * 2);
+              ctx.strokeRect(el[0] * this.scale + unit * 3, el[1] * this.scale + unit, unit, unit * 2);
             }
-            if (i !== 0 && this.body[i - 1][2] === "up") {
-              ctx.fillRect(
-                el[0] * this.scale + unit,
-                el[1] * this.scale + unit * 3,
-                unit * 2,
-                unit
-              );
-              ctx.fillRect(
-                el[0] * this.scale + unit,
-                el[1] * this.scale + unit,
-                unit * 2,
-                unit * 2
-              );
-              ctx.fillRect(
-                el[0] * this.scale + unit,
-                el[1] * this.scale,
-                unit * 2,
-                unit
-              );
+            if (el[2] === "up" && this.body[i - 1][2] === "left") {
+              ctx.fillRect(el[0] * this.scale + unit, el[1] * this.scale + unit * 3, unit * 2, unit);
+              ctx.fillRect(el[0] * this.scale + unit, el[1] * this.scale + unit, unit * 2, unit * 2);
+              ctx.fillRect(el[0] * this.scale, el[1] * this.scale + unit, unit, unit * 2);
+              ctx.strokeRect(el[0] * this.scale + unit, el[1] * this.scale + unit * 3, unit * 2, unit);
+              ctx.strokeRect(el[0] * this.scale + unit, el[1] * this.scale + unit, unit * 2, unit * 2);
+              ctx.strokeRect(el[0] * this.scale, el[1] * this.scale + unit, unit, unit * 2);
             }
-          }
-          if (el[2] === "down") {
-            if (i === 0) {
-              ctx.fillRect(
-                el[0] * this.scale + unit,
-                el[1] * this.scale,
-                this.scale - (unit * 2),
-                this.scale
-              );
+            if (el[2] === "up" && this.body[i - 1][2] === "up") {
+              ctx.fillRect(el[0] * this.scale + unit, el[1] * this.scale + unit * 3, unit * 2, unit);
+              ctx.fillRect(el[0] * this.scale + unit, el[1] * this.scale + unit, unit * 2, unit * 2);
+              ctx.fillRect(el[0] * this.scale + unit, el[1] * this.scale, unit * 2, unit);
+              ctx.strokeRect(el[0] * this.scale + unit, el[1] * this.scale + unit * 3, unit * 2, unit);
+              ctx.strokeRect(el[0] * this.scale + unit, el[1] * this.scale + unit, unit * 2, unit * 2);
+              ctx.strokeRect(el[0] * this.scale + unit, el[1] * this.scale, unit * 2, unit);
             }
-            if (i !== 0 && this.body[i - 1][2] === "right") {
-              ctx.fillRect(
-                el[0] * this.scale + unit,
-                el[1] * this.scale,
-                unit * 2,
-                unit
-              );
-              ctx.fillRect(
-                el[0] * this.scale + unit,
-                el[1] * this.scale + unit,
-                unit * 2,
-                unit * 2
-              );
-              ctx.fillRect(
-                el[0] * this.scale + unit * 3,
-                el[1] * this.scale + unit,
-                unit,
-                unit * 2
-              );
+            if (el[2] === "down" && this.body[i - 1][2] === "right") {
+              ctx.fillRect(el[0] * this.scale + unit, el[1] * this.scale, unit * 2, unit);
+              ctx.fillRect(el[0] * this.scale + unit, el[1] * this.scale + unit, unit * 2, unit * 2);
+              ctx.fillRect(el[0] * this.scale + unit * 3, el[1] * this.scale + unit, unit, unit * 2);
+              ctx.strokeRect(el[0] * this.scale + unit, el[1] * this.scale, unit * 2, unit);
+              ctx.strokeRect(el[0] * this.scale + unit, el[1] * this.scale + unit, unit * 2, unit * 2);
+              ctx.strokeRect(el[0] * this.scale + unit * 3, el[1] * this.scale + unit, unit, unit * 2);
             }
-            if (i !== 0 && this.body[i - 1][2] === "left") {
-              ctx.fillRect(
-                el[0] * this.scale + unit,
-                el[1] * this.scale,
-                unit * 2,
-                unit
-              );
-              ctx.fillRect(
-                el[0] * this.scale + unit,
-                el[1] * this.scale + unit,
-                unit * 2,
-                unit * 2
-              );
-              ctx.fillRect(
-                el[0] * this.scale,
-                el[1] * this.scale + unit,
-                unit,
-                unit * 2
-              );
+            if (el[2] === "down" && this.body[i - 1][2] === "left") {
+              ctx.fillRect(el[0] * this.scale + unit, el[1] * this.scale, unit * 2, unit);
+              ctx.fillRect(el[0] * this.scale + unit, el[1] * this.scale + unit, unit * 2, unit * 2);
+              ctx.fillRect(el[0] * this.scale, el[1] * this.scale + unit, unit, unit * 2);
+              ctx.strokeRect(el[0] * this.scale + unit, el[1] * this.scale, unit * 2, unit);
+              ctx.strokeRect(el[0] * this.scale + unit, el[1] * this.scale + unit, unit * 2, unit * 2);
+              ctx.strokeRect(el[0] * this.scale, el[1] * this.scale + unit, unit, unit * 2);
             }
-            if (i !== 0 && this.body[i - 1][2] === "down") {
-              ctx.fillRect(
-                el[0] * this.scale + unit,
-                el[1] * this.scale,
-                unit * 2,
-                unit
-              );
-              ctx.fillRect(
-                el[0] * this.scale + unit,
-                el[1] * this.scale + unit,
-                unit * 2,
-                unit * 2
-              );
-              ctx.fillRect(
-                el[0] * this.scale + unit,
-                el[1] * this.scale + unit * 3,
-                unit * 2,
-                unit
-              );
+            if (el[2] === "down" && this.body[i - 1][2] === "down") {
+              ctx.fillRect(el[0] * this.scale + unit, el[1] * this.scale, unit * 2, unit);
+              ctx.fillRect(el[0] * this.scale + unit, el[1] * this.scale + unit, unit * 2, unit * 2);
+              ctx.fillRect(el[0] * this.scale + unit, el[1] * this.scale + unit * 3, unit * 2, unit);
+              ctx.strokeRect(el[0] * this.scale + unit, el[1] * this.scale, unit * 2, unit);
+              ctx.strokeRect(el[0] * this.scale + unit, el[1] * this.scale + unit, unit * 2, unit * 2);
+              ctx.strokeRect(el[0] * this.scale + unit, el[1] * this.scale + unit * 3, unit * 2, unit);
             }
           }
         });
@@ -417,6 +240,7 @@ const speeds = {
 
 // GAME LOOP
 let currentSpeed = speeds.normal;
+// let currentSpeed = 40;
 let counter = 0;
 let previousTimestamp = 0;
 
