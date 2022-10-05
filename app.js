@@ -115,3 +115,9 @@ speedButtons.forEach((el) => {
     currentSpeed = speeds[e.target.dataset.speed];
   });
 });
+
+// PWA
+if ("serviceWorker" in navigator) {
+  // register service worker
+  navigator.serviceWorker.register("service-worker.js");
+}
