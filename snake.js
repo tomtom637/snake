@@ -59,11 +59,11 @@ export default class Snake {
   drawFood() {
     switch (this.style) {
       case "retro":
-        ctx.fillStyle = "red";
+        ctx.fillStyle = "#f00";
         ctx.fillRect(this.foodPosition[0] + this.scale / 4, this.foodPosition[1] + this.scale / 4, this.scale - (this.scale / 2), this.scale - (this.scale / 2));
         break;
       case "thin":
-        ctx.fillStyle = "red";
+        ctx.fillStyle = "#b00";
         ctx.fillRect(this.foodPosition[0] + this.scale / 3, this.foodPosition[1] + this.scale / 3, this.scale - (this.scale / 1.5), this.scale - (this.scale / 1.5));
         break;
     }
