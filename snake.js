@@ -13,6 +13,7 @@ export default class Snake {
       [canvas.width / (2 * this.scale) - this.scale - this.scale, canvas.width / (2 * this.scale), "right"]
     ];
     this.score = 0;
+    this.dead = false;
     this.updateFoodPosition();
     this.style = "thin";
   }
@@ -91,11 +92,8 @@ export default class Snake {
         if (this.score > highScore) {
           window.localStorage.setItem("highScore", this.score);
           highScoreElement.textContent = this.score;
-          alert(`Game over!\n\nYou've just set a new high score of ${this.score}, Congratulations!`);
-        } else {
-          alert(`Game over!\nYour score: ${this.score}\nHigh score: ${highScore}`);
         }
-        location.reload();
+        this.dead = true;
       }
     });
   }

@@ -16,7 +16,38 @@ canvas.style.width = canvas.width / 2 + "px";
 canvas.style.height = canvas.height / 2 + "px";
 app.append(canvas);
 
-const snake = new Snake();
+const gameOverScreen = document.querySelector(".game-over");
+const gameOverMessageElement = document.querySelector(".game-over__message");
+const gameOverButtonElement = document.querySelector(".game-over__btn");
+
+gameOverButtonElement.addEventListener("click", playAgain);
+
+function playAgain(e) {
+  gameOverScreen.classList.add("hidden");
+  scoreElement.textContent = 0;
+  snake = new Snake();
+}
+function handleKeyDown(e) {
+  if (e.key === "Enter") {
+    document.removeEventListener("keydown", handleKeyDown);
+    playAgain();
+  }
+}
+let sentenceCounter = 0;
+function handleGameOverAction() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  sentenceCounter++;
+  if (sentenceCounter % 4 === 0) {
+    Math.random() > 0.5
+      ? gameOverMessageElement.textContent += "s"
+      : gameOverMessageElement.textContent += "S";
+    gameOverMessageElement.textContent = gameOverMessageElement.textContent.slice(1);
+  }
+  gameOverScreen.classList.remove("hidden");
+  document.addEventListener("keydown", handleKeyDown);
+}
+
+let snake = new Snake();
 
 const speeds = {
   slow: 10,
@@ -34,7 +65,9 @@ function gameLoop(timestamp) {
   counter++;
   const elapsed = timestamp - previousTimestamp;
   previousTimestamp = timestamp;
-  if (counter % ~~(16 * currentSpeed / elapsed) === 0) {
+  if (snake.dead) {
+    handleGameOverAction();
+  } else if (counter % ~~(16 * currentSpeed / elapsed) === 0) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     snake.updateSnake();
     snake.drawFood();

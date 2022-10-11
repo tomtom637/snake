@@ -40,7 +40,7 @@ html, body {
 .footer > *:hover {
   color: hsl(120, 100%, 35%);
 }
-@keyframes blink {
+@keyframes breathe {
   0% {
     box-shadow: 0 0 15px 0 rgba(0 255 0 / 25%),
     inset 0 0 130px 2px rgba(0 255 0 / 15%);
@@ -62,5 +62,63 @@ html, body {
   background-position: -1px -1px;
   border-radius: 8px;
   outline: 1px solid #050;
-  animation: 16s blink infinite ease-in-out;
+  animation: 16s breathe infinite ease-in-out;
+}
+.game-over {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.7;
+  color: hsl(120, 100%, 35%);
+  background-color: black;
+  border-radius: 8px;
+  outline: 1px solid #050;
+  padding: 15px 35px;
+  z-index: 1;
+}
+.game-over.hidden {
+  display: none;
+}
+.game-over__title {
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 2px;
+}
+.game-over__message {
+  font-size: 16px;
+  font-weight: 500;
+  margin-block-end: 20px;
+}
+.game-over__btn {
+  display: block;
+  cursor: pointer;
+  color: inherit;
+  font-weight: 700;
+  padding: 5px 15px;
+  background-color: transparent;
+  border: none;
+  outline: 1px solid #050;
+  border-radius: 8px;
+  box-shadow: 0 0 200px 0 #0f0;
+  animation: blink 1.5s infinite linear;
+}
+
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  49% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+  99% {
+    opacity: 0.3;
+  }
 }
