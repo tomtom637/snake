@@ -1,4 +1,11 @@
-export default function renderThinSnake(ctx, canvas, body, scale) {
+import { BodyPart } from "../snake";
+
+export default function renderThinSnake(
+  ctx: CanvasRenderingContext2D,
+  _canvas: HTMLCanvasElement,
+  body: BodyPart[],
+  scale: number
+) {
   const unit = scale / 4;
   ctx.fillStyle = "green";
   ctx.strokeStyle = "aquamarine";

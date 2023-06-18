@@ -1,33 +1,47 @@
-import Snake from './snake.js';
+import "./styles.css";
+import Snake from "./snake";
 
-export const highScore = window.localStorage.getItem("highScore") || 0;
+const storedHighScore = window.localStorage.getItem("highscore");
+export const highScore = storedHighScore ? parseInt(storedHighScore) : 0;
 export const canvas = document.createElement("canvas");
 export const ctx = canvas.getContext("2d");
 export const highScoreElement = document.querySelector(".high-score");
 export const scoreElement = document.querySelector(".score");
 
 const app = document.getElementById("app");
-highScoreElement.textContent = highScore;
-scoreElement.textContent = 0;
+if (highScoreElement) {
+  highScoreElement.textContent = highScore.toString();
+}
+if (scoreElement) {
+  scoreElement.textContent = "0";
+}
 canvas.classList.add("canvas");
 canvas.width = 800;
 canvas.height = 800;
 canvas.style.width = canvas.width / 2 + "px";
 canvas.style.height = canvas.height / 2 + "px";
-app.append(canvas);
+
+if (app) {
+  app.append(canvas);
+}
 
 const gameOverScreen = document.querySelector(".game-over");
 const gameOverMessageElement = document.querySelector(".game-over__message");
 const gameOverButtonElement = document.querySelector(".game-over__btn");
 
-gameOverButtonElement.addEventListener("click", playAgain);
+if (gameOverButtonElement) {
+  gameOverButtonElement.addEventListener("click", playAgain);
+}
 
-function playAgain(e) {
+
+function playAgain() {
+  if (!gameOverScreen || !scoreElement) return;
   gameOverScreen.classList.add("hidden");
-  scoreElement.textContent = 0;
+  scoreElement.textContent = "0";
   snake = new Snake();
 }
-function handleKeyDown(e) {
+
+function handleKeyDown(e: KeyboardEvent) {
   if (e.key === "Enter") {
     document.removeEventListener("keydown", handleKeyDown);
     playAgain();
@@ -35,13 +49,16 @@ function handleKeyDown(e) {
 }
 let sentenceCounter = 0;
 function handleGameOverAction() {
+  if (!ctx || !gameOverMessageElement || !gameOverScreen) return;
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   sentenceCounter++;
   if (sentenceCounter % 4 === 0) {
     Math.random() > 0.5
       ? gameOverMessageElement.textContent += "s"
       : gameOverMessageElement.textContent += "S";
-    gameOverMessageElement.textContent = gameOverMessageElement.textContent.slice(1);
+    if (gameOverMessageElement.textContent) {
+      gameOverMessageElement.textContent = gameOverMessageElement.textContent.slice(1);
+    }
   }
   gameOverScreen.classList.remove("hidden");
   document.addEventListener("keydown", handleKeyDown);
@@ -49,7 +66,7 @@ function handleGameOverAction() {
 
 let snake = new Snake();
 
-const speeds = {
+const speeds: Record<string, number> = {
   slow: 10,
   normal: 7,
   fast: 5,
@@ -61,13 +78,14 @@ let currentSpeed = speeds.normal;
 let counter = 0;
 let previousTimestamp = 0;
 
-function gameLoop(timestamp) {
+function gameLoop(timestamp: number) {
+  if (!ctx) return;
   counter++;
   const elapsed = timestamp - previousTimestamp;
   previousTimestamp = timestamp;
   if (snake.dead) {
     handleGameOverAction();
-  } else if (counter % ~~(16 * currentSpeed / elapsed) === 0) {
+  } else if (counter % Math.round(16 * currentSpeed / elapsed) === 0) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     snake.updateSnake();
     snake.drawFood();
@@ -80,7 +98,7 @@ function gameLoop(timestamp) {
   requestAnimationFrame(gameLoop);
 }
 
-gameLoop();
+requestAnimationFrame(gameLoop);
 
 // KEYBOARD EVENTS
 document.addEventListener("keydown", (e) => {
@@ -145,12 +163,11 @@ document.addEventListener("keydown", (e) => {
 const speedButtons = document.querySelectorAll("[data-speed]");
 speedButtons.forEach((el) => {
   el.addEventListener("click", (e) => {
-    currentSpeed = speeds[e.target.dataset.speed];
+    if (
+      e.target  instanceof HTMLDivElement
+      && e.target.dataset.speed
+    ) {
+      currentSpeed = speeds[e.target.dataset.speed];
+    }
   });
 });
-
-// PWA
-if ("serviceWorker" in navigator) {
-  // register service worker
-  navigator.serviceWorker.register("service-worker.js");
-}

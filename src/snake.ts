@@ -1,8 +1,18 @@
-import { highScore, highScoreElement, scoreElement, canvas, ctx } from "./app.js";
-import renderRetroSnake from "./snakes/retroSnake.js";
-import renderThinSnake from "./snakes/thinSnake.js";
+import { highScore, highScoreElement, scoreElement, canvas, ctx } from "./app";
+import renderRetroSnake from "./snakes/retroSnake";
+import renderThinSnake from "./snakes/thinSnake";
+
+export type BodyPart = [number, number, string];
 
 export default class Snake {
+  bufferedInputs: string[];
+  direction: string;
+  scale: number;
+  body: BodyPart[];
+  score: number;
+  dead: boolean;
+  foodPosition: number[];
+  style: "retro" | "thin";
   constructor () {
     this.bufferedInputs = [];
     this.direction = "right";
@@ -16,8 +26,10 @@ export default class Snake {
     this.dead = false;
     this.updateFoodPosition();
     this.style = "thin";
+    this.foodPosition = [~~(Math.random() * canvas.width / this.scale) * this.scale, ~~(Math.random() * canvas.height / this.scale) * this.scale];
   }
   drawSnake() {
+    if (!ctx) return;
     switch (this.style) {
       case "retro":
         renderRetroSnake(ctx, canvas, this.body, this.scale);
@@ -58,6 +70,7 @@ export default class Snake {
     this.body.pop();
   }
   drawFood() {
+    if (!ctx) return;
     switch (this.style) {
       case "retro":
         ctx.fillStyle = "#f00";
@@ -81,7 +94,9 @@ export default class Snake {
       this.updateFoodPosition();
       this.drawFood();
       this.score += 5;
-      scoreElement.textContent = this.score;
+      if (scoreElement) {
+        scoreElement.textContent = this.score.toString();
+      }
     }
   }
   checkCollision() {
@@ -90,8 +105,10 @@ export default class Snake {
     tail.forEach((el) => {
       if (el[0] === head[0] && el[1] === head[1]) {
         if (this.score > highScore) {
-          window.localStorage.setItem("highScore", this.score);
-          highScoreElement.textContent = this.score;
+          window.localStorage.setItem("highScore", this.score.toString());
+          if (highScoreElement) {
+            highScoreElement.textContent = this.score.toString();
+          }
         }
         this.dead = true;
       }
