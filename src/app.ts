@@ -1,7 +1,7 @@
 import "./styles.css";
 import Snake from "./snake";
 
-const storedHighScore = window.localStorage.getItem("highscore");
+const storedHighScore = window.localStorage.getItem("highScore");
 export const highScore = storedHighScore ? parseInt(storedHighScore) : 0;
 export const canvas = document.createElement("canvas");
 export const ctx = canvas.getContext("2d");
