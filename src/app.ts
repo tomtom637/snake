@@ -67,7 +67,7 @@ function handleGameOverAction() {
 let snake = new Snake();
 
 const speeds: Record<string, number> = {
-  slow: 10,
+  slow: 12,
   normal: 7,
   fast: 5,
   insane: 2,
@@ -75,18 +75,17 @@ const speeds: Record<string, number> = {
 
 // GAME LOOP
 let currentSpeed = speeds.normal;
-let counter = 0;
-// let previousTimestamp = 0;
+let previousTimestamp = 0;
+let elapsed = 0;
 
-function gameLoop(/* timestamp: number */) {
+function gameLoop(timestamp: number) {
   if (!ctx) return;
-  counter++;
-  // const elapsed = timestamp - previousTimestamp;
-  // previousTimestamp = timestamp;
+  elapsed += timestamp - previousTimestamp;
+  previousTimestamp = timestamp;
   if (snake.dead) {
     handleGameOverAction();
-  // } else if (counter % Math.round(16 * currentSpeed / elapsed) === 0) {
-  } else if (counter % currentSpeed === 0) {
+  } else if (elapsed >= currentSpeed * 16) {
+    elapsed = 0;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     snake.updateSnake();
     snake.drawFood();
