@@ -164,7 +164,7 @@ const speedButtons = document.querySelectorAll("[data-speed]");
 speedButtons.forEach((el) => {
   el.addEventListener("click", (e) => {
     if (
-      e.target  instanceof HTMLDivElement
+      e.target  instanceof HTMLButtonElement
       && e.target.dataset.speed
     ) {
       currentSpeed = speeds[e.target.dataset.speed];
