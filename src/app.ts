@@ -164,10 +164,37 @@ const speedButtons = document.querySelectorAll("[data-speed]");
 speedButtons.forEach((el) => {
   el.addEventListener("click", (e) => {
     if (
-      e.target  instanceof HTMLButtonElement
+      e.target instanceof HTMLButtonElement
       && e.target.dataset.speed
     ) {
       currentSpeed = speeds[e.target.dataset.speed];
     }
   });
 });
+
+// MOBILE CONTROLS
+canvas.addEventListener("touchstart", (e: TouchEvent) => {
+  e.preventDefault();
+  const canvasRect = canvas.getBoundingClientRect();
+  const xRatio = (e.touches[0].clientX - canvasRect.left) / canvasRect.width;
+  const yRatio = (e.touches[0].clientY - canvasRect.top) / canvasRect.height;
+  if (snake.direction === "up" || snake.direction === "down") handleMovement(xRatio, "horizontal");
+  if (snake.direction === "left" || snake.direction === "right") handleMovement(yRatio, "vertical");
+});
+
+function handleMovement(ratio: number, direction: "horizontal" | "vertical") {
+  if (ratio < 0.5) {
+    if (direction === "horizontal") {
+      snake.bufferedInputs.push("left");
+    } else {
+      snake.bufferedInputs.push("up");
+    }
+  }
+  if (ratio > 0.5) {
+    if (direction === "horizontal") {
+      snake.bufferedInputs.push("right");
+    } else {
+      snake.bufferedInputs.push("down");
+    }
+  }
+}

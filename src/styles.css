@@ -79,13 +79,14 @@ html, body {
 }
 .canvas {
   display: block;
-  margin: 80px auto;
+  margin: 150px auto;
   background-color: #000;
   background-image: url("./screen-texture.svg");
   background-position: -1px -1px;
   border-radius: 8px;
   outline: 1px solid #050;
   animation: 12s breathe infinite ease-in-out;
+  touch-action: manipulation;
 }
 .game-over {
   position: absolute;
