@@ -28,6 +28,13 @@ if (app) {
 const gameOverScreen = document.querySelector(".game-over");
 const gameOverMessageElement = document.querySelector(".game-over__message");
 const gameOverButtonElement = document.querySelector(".game-over__btn");
+const pauseScreen = document.querySelector(".pause");
+
+function handlePause() {
+  pause = !pause;
+  if (!pauseScreen) return;
+  pauseScreen.classList.toggle("hidden");
+}
 
 if (gameOverButtonElement) {
   gameOverButtonElement.addEventListener("click", playAgain);
@@ -84,6 +91,8 @@ function gameLoop(timestamp: number) {
   previousTimestamp = timestamp;
   if (snake.dead) {
     handleGameOverAction();
+  } else if (pause) {
+   // Do nothing
   } else if (elapsed >= currentSpeed * 16) {
     elapsed = 0;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -100,11 +109,15 @@ function gameLoop(timestamp: number) {
 
 requestAnimationFrame(gameLoop);
 
+// GAME PAUSE
+let pause = false;
+
 // KEYBOARD EVENTS
 document.addEventListener("keydown", (e) => {
   if (snake.bufferedInputs.length > 2) return;
   switch (e.key) {
     case "ArrowUp":
+      if (pause) handlePause();;
       if (snake.bufferedInputs.length !== 0) {
         if (snake.bufferedInputs[snake.bufferedInputs.length - 1] === "down" ||
           snake.bufferedInputs[snake.bufferedInputs.length - 1] === "up") {
@@ -118,6 +131,7 @@ document.addEventListener("keydown", (e) => {
       }
       break;
     case "ArrowDown":
+      if (pause) handlePause();;
       if (snake.bufferedInputs.length !== 0) {
         if (snake.bufferedInputs[snake.bufferedInputs.length - 1] === "up" ||
           snake.bufferedInputs[snake.bufferedInputs.length - 1] === "down") {
@@ -131,6 +145,7 @@ document.addEventListener("keydown", (e) => {
       }
       break;
     case "ArrowLeft":
+      if (pause) handlePause();
       if (snake.bufferedInputs.length !== 0) {
         if (snake.bufferedInputs[snake.bufferedInputs.length - 1] === "right" ||
           snake.bufferedInputs[snake.bufferedInputs.length - 1] === "left") {
@@ -144,6 +159,7 @@ document.addEventListener("keydown", (e) => {
       }
       break;
     case "ArrowRight":
+      if (pause) handlePause();
       if (snake.bufferedInputs.length !== 0) {
         if (snake.bufferedInputs[snake.bufferedInputs.length - 1] === "left" ||
           snake.bufferedInputs[snake.bufferedInputs.length - 1] === "right") {
@@ -155,6 +171,11 @@ document.addEventListener("keydown", (e) => {
           snake.bufferedInputs.push("right");
         }
       }
+      break;
+    case "Escape":
+    case " ":
+      if(snake.dead) return;
+      handlePause();
       break;
   }
 });

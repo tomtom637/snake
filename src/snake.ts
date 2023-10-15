@@ -18,9 +18,9 @@ export default class Snake {
     this.direction = "right";
     this.scale = 40;
     this.body = [
-      [canvas.width / (2 * this.scale), canvas.width / (2 * this.scale), "right"],
-      [canvas.width / (2 * this.scale) - this.scale, canvas.width / (2 * this.scale), "right"],
-      [canvas.width / (2 * this.scale) - this.scale - this.scale, canvas.width / (2 * this.scale), "right"]
+      [canvas.width / (2 * this.scale), canvas.height / (2 * this.scale), "right"],
+      [canvas.width / (2 * this.scale) - this.scale, canvas.height / (2 * this.scale), "right"],
+      [canvas.width / (2 * this.scale) - this.scale - this.scale, canvas.height / (2 * this.scale), "right"]
     ];
     this.score = 0;
     this.dead = false;

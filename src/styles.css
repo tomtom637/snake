@@ -88,7 +88,7 @@ html, body {
   animation: 12s breathe infinite ease-in-out;
   touch-action: manipulation;
 }
-.game-over {
+.game-over, .pause {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -104,9 +104,9 @@ html, body {
   outline: 1px solid #050;
   padding: 15px 35px;
   z-index: 1;
-}
-.game-over.hidden {
-  display: none;
+  &.hidden {
+    display: none;
+  }
 }
 .game-over__title {
   font-size: 20px;
@@ -129,5 +129,11 @@ html, body {
   outline: 1px solid #050;
   border-radius: 8px;
   box-shadow: 0 0 200px 0 #0f0;
+  animation: blink 1.5s infinite linear;
+}
+.pause__title {
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 2px;
   animation: blink 1.5s infinite linear;
 }
